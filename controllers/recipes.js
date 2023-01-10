@@ -18,7 +18,7 @@ const getRecipe = async (req, res) => {
         if (!recipe) {
             throw new Error("No recipe with such Id")
         }
-        res.status(StatusCodes.OK).json({recipe})
+        res.status(StatusCodes.OK).json(recipe)
     } catch (error) {
         throw new Error(`The Id ${error.value} you have provided is invalid`)
     }
