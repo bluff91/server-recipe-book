@@ -2,12 +2,13 @@ const Recipe = require('../models/recipeModel')
 const {StatusCodes} = require('http-status-codes')
 
 
+  
 const getAllRecipes = async (req, res) => {
     try {
         const recipes = await Recipe.find({})
         res.status(StatusCodes.OK).json(recipes)
     } catch (error){
-        throw new Error("Something wend wrong, please try again later")
+        throw new Error(`${error.message}`)
     }
 }
 
