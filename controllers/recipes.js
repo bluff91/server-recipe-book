@@ -15,7 +15,6 @@ const getAllRecipes = async (req, res) => {
 const searchRecipes = async (req, res) => {
     try {
     const query  = Object.keys(req.query).join("")
-    console.log(query)
     const recipes = await Recipe.find({
         $or:[
             {title: {$regex: query, $options: "i"}},
