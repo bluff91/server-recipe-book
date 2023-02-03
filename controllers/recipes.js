@@ -12,6 +12,22 @@ const getAllRecipes = async (req, res) => {
     }
 }
 
+const searchRecipes = async (req, res) => {
+    try {
+    const query  = Object.keys(req.query).join("")
+    console.log(query)
+    const recipes = await Recipe.find({
+        $or:[
+            {title: {$regex: query, $options: "i"}},
+            {method: {$regex: query, $options: "i"}}
+        ]
+    }).select("-_id")
+    res.status(StatusCodes.OK).json(recipes)
+    } catch (error) {
+        throw new Error(`${error.message}`)
+    }
+}
+
 const getRecipe = async (req, res) => {
     try {
         const { id } = req.params
@@ -28,7 +44,6 @@ const getRecipe = async (req, res) => {
 const createRecipe = async (req, res) => {
     try {
         const {title, cookingTime, method, ingredients} = req.body
-        console.log(title, cookingTime, method, ingredients)
         if (!title || !cookingTime || !method) {
             throw new Error("Bad request error. You need to provide valid values for all the fields")
         }
@@ -40,4 +55,5 @@ const createRecipe = async (req, res) => {
     }
 }
 
-module.exports = {getAllRecipes, getRecipe, createRecipe}
+
+module.exports = {getAllRecipes, getRecipe, createRecipe, searchRecipes}
