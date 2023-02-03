@@ -21,7 +21,7 @@ const searchRecipes = async (req, res) => {
             {title: {$regex: query, $options: "i"}},
             {method: {$regex: query, $options: "i"}}
         ]
-    }).select("-_id")
+    })
     res.status(StatusCodes.OK).json(recipes)
     } catch (error) {
         throw new Error(`${error.message}`)
